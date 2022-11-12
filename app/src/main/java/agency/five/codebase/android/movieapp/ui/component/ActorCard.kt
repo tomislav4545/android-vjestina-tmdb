@@ -3,39 +3,70 @@ package agency.five.codebase.android.movieapp.ui.component
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import agency.five.codebase.android.movieapp.mock.MoviesMock.getActor
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
+import agency.five.codebase.android.movieapp.ui.theme.Typography
+import androidx.compose.ui.text.style.TextOverflow
 
-// imports
 data class ActorCardViewState(
     val imageUrl: String?,
     val name: String,
     val character: String,
 )
+
+data class Spacing(
+    val default: Dp = 0.dp,
+    val extraSmall: Dp = 4.dp,
+    val small: Dp = 8.dp,
+    val medium: Dp = 16.dp,
+    val large: Dp = 32.dp,
+    val extraLarge: Dp = 64.dp
+)
+
 @Composable
 fun ActorCard(
     actorCardViewState: ActorCardViewState,
     modifier: Modifier = Modifier,
 ) {
-    Card(modifier = modifier.width(125.dp).height(200.dp).padding(10.dp), shape= RoundedCornerShape(10.dp),elevation = 10.dp){
+    Card(
+        modifier = modifier.width(125.dp).height(200.dp).padding(10.dp),
+        shape= RoundedCornerShape(10.dp),
+        elevation = 10.dp
+    ){
         Column() {
-            AsyncImage(model = actorCardViewState.imageUrl, contentDescription = null, contentScale = ContentScale.Crop, modifier = modifier.height(110.dp))
-            Text(text = actorCardViewState.name, fontSize = 13.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Left ,modifier = modifier.padding(top=10.dp, bottom = 5.dp).padding(horizontal = 10.dp))
-            Text(text = actorCardViewState.character, fontSize = 9.sp, textAlign = TextAlign.Left, modifier = modifier.padding(start = 10.dp).alpha(ContentAlpha.disabled).width(100.dp))
+            AsyncImage(
+                model = actorCardViewState.imageUrl,
+                contentDescription = null,
+                modifier = Modifier.height(110.dp),
+                contentScale = ContentScale.Crop
+            )
+            Text(
+                text = actorCardViewState.name,
+                modifier = Modifier.padding(top=10.dp, bottom = 5.dp).padding(horizontal = 10.dp),
+                style = Typography.h3,
+                textAlign = TextAlign.Left,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = actorCardViewState.character,
+                style = Typography.h4,
+                textAlign = TextAlign.Left,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
         }
     }
 }
+
 @Preview
 @Composable
 private fun ActorCardPreview() {
