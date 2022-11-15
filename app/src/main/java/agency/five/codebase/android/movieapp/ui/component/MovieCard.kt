@@ -24,14 +24,10 @@ data class MovieCardViewState(
 fun MovieCard(
     modifier: Modifier,
     movieCardViewState: MovieCardViewState,
-    onFavoriteButtonClicked: () -> Unit,
     onClick: () -> Unit
 ) {
     Card(
         modifier = modifier
-            .width(125.dp)
-            .height(205.dp)
-            .padding(10.dp)
             .clickable { onClick() },
         shape = RoundedCornerShape(10.dp),
         elevation = 10.dp
@@ -59,11 +55,14 @@ fun MovieCard(
 @Composable
 private fun MovieCardPreview() {
     val movie = MoviesMock.getMoviesList()[4]
-    val movieCardViewState = MovieCardViewState(imageUrl = movie.imageUrl, title = movie.title, movie.isFavorite)
+    val movieCardViewState =
+        MovieCardViewState(imageUrl = movie.imageUrl, title = movie.title, movie.isFavorite)
     MovieCard(
         movieCardViewState = movieCardViewState,
-        modifier = Modifier,
-        onClick = {  },
-        onFavoriteButtonClicked = {  }
+        modifier = Modifier
+            .width(125.dp)
+            .height(205.dp)
+            .padding(10.dp),
+        onClick = { },
     )
 }

@@ -3,6 +3,7 @@ package agency.five.codebase.android.movieapp.ui.component
 import agency.five.codebase.android.movieapp.mock.MoviesMock.getCrewman
 import agency.five.codebase.android.movieapp.ui.theme.Typography
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,6 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
 data class CrewItemViewState(
     val name: String,
@@ -20,10 +22,11 @@ data class CrewItemViewState(
 fun CrewItem(
     crewItemViewState: CrewItemViewState,
     modifier: Modifier = Modifier
-){
-    Column {
+) {
+    Column(modifier = modifier) {
         Text(
             text = crewItemViewState.name,
+            modifier = Modifier.padding(horizontal = 5.dp),
             textAlign = TextAlign.Left,
             style = Typography.h3,
             overflow = TextOverflow.Ellipsis,
@@ -31,6 +34,7 @@ fun CrewItem(
         )
         Text(
             text = crewItemViewState.job,
+            modifier = Modifier.padding(horizontal = 5.dp),
             style = Typography.h3,
             fontWeight = FontWeight.Light,
             overflow = TextOverflow.Ellipsis,
@@ -43,6 +47,6 @@ fun CrewItem(
 @Composable
 private fun CrewmanDetailsPreview() {
     val crewman = getCrewman()
-    val crewItemViewState = CrewItemViewState(crewman.name,crewman.job)
+    val crewItemViewState = CrewItemViewState(crewman.name, crewman.job)
     CrewItem(crewItemViewState = crewItemViewState)
 }

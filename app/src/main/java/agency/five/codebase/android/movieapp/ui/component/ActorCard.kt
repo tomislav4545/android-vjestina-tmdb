@@ -22,35 +22,28 @@ data class ActorCardViewState(
     val character: String,
 )
 
-data class Spacing(
-    val default: Dp = 0.dp,
-    val extraSmall: Dp = 4.dp,
-    val small: Dp = 8.dp,
-    val medium: Dp = 16.dp,
-    val large: Dp = 32.dp,
-    val extraLarge: Dp = 64.dp
-)
-
 @Composable
 fun ActorCard(
     actorCardViewState: ActorCardViewState,
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier.width(125.dp).height(200.dp).padding(10.dp),
-        shape= RoundedCornerShape(10.dp),
+        modifier = modifier,
+        shape = RoundedCornerShape(10.dp),
         elevation = 10.dp
-    ){
+    ) {
         Column() {
             AsyncImage(
                 model = actorCardViewState.imageUrl,
                 contentDescription = null,
-                modifier = Modifier.height(110.dp),
+                modifier = Modifier.weight(0.6f),
                 contentScale = ContentScale.Crop
             )
             Text(
                 text = actorCardViewState.name,
-                modifier = Modifier.padding(top=10.dp, bottom = 5.dp).padding(horizontal = 10.dp),
+                modifier = Modifier
+                    .padding(top = 10.dp, bottom = 5.dp)
+                    .padding(horizontal = 10.dp),
                 style = Typography.h3,
                 textAlign = TextAlign.Left,
                 maxLines = 2,
@@ -58,6 +51,7 @@ fun ActorCard(
             )
             Text(
                 text = actorCardViewState.character,
+                modifier = Modifier.padding(start = 10.dp, end = 5.dp, bottom = 5.dp),
                 style = Typography.h4,
                 textAlign = TextAlign.Left,
                 maxLines = 1,
@@ -71,5 +65,13 @@ fun ActorCard(
 @Composable
 private fun ActorCardPreview() {
     val actor = getActor()
-    ActorCard(actorCardViewState = ActorCardViewState(actor.imageUrl,actor.name,actor.character))
+    ActorCard(
+        actorCardViewState = ActorCardViewState(actor.imageUrl, actor.name, actor.character),
+        modifier = Modifier
+            .padding(10.dp)
+            .size(
+                width = 130.dp,
+                height = 220.dp,
+            )
+    )
 }
