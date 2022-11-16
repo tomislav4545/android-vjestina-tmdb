@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,12 +43,12 @@ fun MovieCategoryLabel(
                 text = selectTextSource(movieCategoryLabelViewState = movieCategoryLabelViewState)
             )
             Spacer(
-                modifier = Modifier.size(5.dp)
+                modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_size))
             )
             Divider(
                 color = Color.Black,
                 modifier = Modifier.fillMaxWidth(),
-                thickness = 3.dp
+                thickness = dimensionResource(id = R.dimen.divider_thickness)
             )
         }
     } else {
@@ -77,5 +78,5 @@ fun MovieCategoryLabelPreview() {
     val stringRes = MovieCategoryLabelTextViewState.ResourceText(R.string.app_name)
     val categoryViewState1 = MovieCategoryLabelViewState(2, false, inputText)
     val categoryViewState2 = MovieCategoryLabelViewState(1, true, stringRes)
-    MovieCategoryLabel(movieCategoryLabelViewState = categoryViewState1, onClick = {})
+    MovieCategoryLabel(movieCategoryLabelViewState = categoryViewState2, onClick = {})
 }

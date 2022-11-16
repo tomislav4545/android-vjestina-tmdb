@@ -2,5 +2,5 @@
 <resources>
     <dimen
         name="favorite_button_size"
-        >32dp</dimen>
+        >32.0dp</dimen>
 </resources>
