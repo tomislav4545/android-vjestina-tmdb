@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen
-        name="corner_radius"
-        >10.0dp</dimen>
-    <dimen
-        name="elevation"
-        >10.0dp</dimen>
-    <dimen
-        name="spacer_size"
-        >5.0dp</dimen>
-    <dimen
-        name="divider_thickness"
-        >3.0dp</dimen>
+    <dimen name="corner_radius">10.0dp</dimen>
+    <dimen name="elevation">10.0dp</dimen>
+    <dimen name="spacer_size">5.0dp</dimen>
+    <dimen name="divider_thickness">3.0dp</dimen>
+    <dimen name="back_icon_size">24.dp</dimen>
+    <dimen name="top_bar_height">50.dp</dimen>
+    <dimen name="medium_spacing">10.dp</dimen>
+    <dimen name="movie_card_favorites_width">120.dp</dimen>
+    <dimen name="movie_card_favorites_height">180.dp</dimen>
+    <dimen name="multi_large_spacing">30.dp</dimen>
+    <dimen name="large_spacing">20.0dp</dimen>
+    <dimen name="home_screen_spacing">20.0dp</dimen>
+    <dimen name="icon_size">100.0dp</dimen>
+    <dimen name="actor_card_width">140.0dp</dimen>
+    <dimen name="actor_card_height">220.0dp</dimen>
+    <dimen name="crewman_height">150.0dp</dimen>
+    <dimen name="movie_image_height">350.0dp</dimen>
+    <dimen name="userscore_size">60.0dp</dimen>
+    <dimen name="favorite_button_size">50.0dp</dimen>
 </resources>

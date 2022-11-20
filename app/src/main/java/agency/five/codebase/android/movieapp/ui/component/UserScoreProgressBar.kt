@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
@@ -63,7 +64,8 @@ fun UserScoreProgressBar(
 
         Text(
             text = SCORE_FORMAT.format(score * PERCENTAGE_FACTOR).toString(),
-            style = Typography.h3
+            style = Typography.h3,
+            color = Color.White
         )
     }
 }

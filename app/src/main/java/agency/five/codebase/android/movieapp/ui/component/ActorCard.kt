@@ -22,6 +22,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 
 data class ActorCardViewState(
+    val id: Int,
     val imageUrl: String?,
     val name: String,
     val character: String,
@@ -74,7 +75,7 @@ fun ActorCard(
 private fun ActorCardPreview() {
     val actor = getActor()
     ActorCard(
-        actorCardViewState = ActorCardViewState(actor.imageUrl, actor.name, actor.character),
+        actorCardViewState = ActorCardViewState(actor.id,actor.imageUrl, actor.name, actor.character),
         modifier = Modifier
             .padding(10.dp)
             .size(
