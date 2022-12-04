@@ -3,6 +3,7 @@ package agency.five.codebase.android.movieapp.ui.home.mapper
 import agency.five.codebase.android.movieapp.R
 import agency.five.codebase.android.movieapp.model.Movie
 import agency.five.codebase.android.movieapp.model.MovieCategory
+import agency.five.codebase.android.movieapp.ui.component.MovieCardViewState
 import agency.five.codebase.android.movieapp.ui.component.MovieCategoryLabelTextViewState
 import agency.five.codebase.android.movieapp.ui.component.MovieCategoryLabelViewState
 import agency.five.codebase.android.movieapp.ui.home.HomeMovieCategoryViewState
@@ -14,47 +15,42 @@ class HomeScreenMapperImpl : HomeScreenMapper {
         selectedMovieCategory: MovieCategory,
         movies: List<Movie>
     ): HomeMovieCategoryViewState {
-        val categories = mutableListOf<MovieCategoryLabelViewState>()
-        val movieViewStates = mutableListOf<HomeMovieViewState>()
 
-        for (movieCategory in movieCategories) {
-            categories.add(
-                MovieCategoryLabelViewState(
-                    itemId = movieCategory.ordinal,
-                    isSelected = selectedMovieCategory == movieCategory,
-                    categoryText = MovieCategoryLabelTextViewState.ResourceText(
-                        getResourceTextIdFromMovieCategory(movieCategory)
-                    )
+        val movieCategoryLabelStates = movieCategories.map {
+            MovieCategoryLabelViewState(
+                itemId = it.ordinal,
+                isSelected = it == selectedMovieCategory,
+                categoryText = MovieCategoryLabelTextViewState.ResourceText(
+                    getResourceTextIdFromMovieCategory(it)
                 )
             )
         }
 
-        for (movie in movies) {
-            movieViewStates.add(
-                HomeMovieViewState(
-                    movieId = movie.id,
-                    imageUrl = movie.imageUrl,
-                    isFavorite = movie.isFavorite,
-                    title = movie.title
+        val homeMovieViewStates = movies.map {
+            HomeMovieViewState(
+                movieId = it.id,
+                MovieCardViewState(
+                    imageUrl = it.imageUrl,
+                    isFavorite = it.isFavorite
                 )
             )
         }
 
-        return HomeMovieCategoryViewState(categories, movieViewStates)
+        return HomeMovieCategoryViewState(movieCategoryLabelStates, homeMovieViewStates)
     }
-}
 
-fun getResourceTextIdFromMovieCategory(
-    movieCategory: MovieCategory
-): Int {
-    return when (movieCategory) {
-        MovieCategory.POPULAR_STREAMING -> R.string.streaming
-        MovieCategory.POPULAR_ON_TV -> R.string.on_tv
-        MovieCategory.POPULAR_FOR_RENT -> R.string.for_rent
-        MovieCategory.POPULAR_IN_THEATRES -> R.string.in_theatres
-        MovieCategory.NOW_PLAYING_MOVIES -> R.string.movies
-        MovieCategory.NOW_PLAYING_TV -> R.string.TV
-        MovieCategory.UPCOMING_TODAY -> R.string.today
-        MovieCategory.UPCOMING_THIS_WEEK -> R.string.this_week
+    private fun getResourceTextIdFromMovieCategory(
+        movieCategory: MovieCategory
+    ): Int {
+        return when (movieCategory) {
+            MovieCategory.POPULAR_STREAMING -> R.string.streaming
+            MovieCategory.POPULAR_ON_TV -> R.string.on_tv
+            MovieCategory.POPULAR_FOR_RENT -> R.string.for_rent
+            MovieCategory.POPULAR_IN_THEATRES -> R.string.in_theatres
+            MovieCategory.NOW_PLAYING_MOVIES -> R.string.movies
+            MovieCategory.NOW_PLAYING_TV -> R.string.TV
+            MovieCategory.UPCOMING_TODAY -> R.string.today
+            MovieCategory.UPCOMING_THIS_WEEK -> R.string.this_week
+        }
     }
 }

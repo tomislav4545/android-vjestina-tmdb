@@ -12,9 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import agency.five.codebase.android.movieapp.mock.MoviesMock.getActor
-import agency.five.codebase.android.movieapp.ui.theme.Spacing
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.Dp
 import agency.five.codebase.android.movieapp.ui.theme.Typography
 import agency.five.codebase.android.movieapp.ui.theme.spacing
 import androidx.compose.material.MaterialTheme
@@ -75,7 +73,12 @@ fun ActorCard(
 private fun ActorCardPreview() {
     val actor = getActor()
     ActorCard(
-        actorCardViewState = ActorCardViewState(actor.id,actor.imageUrl, actor.name, actor.character),
+        actorCardViewState = ActorCardViewState(
+            actor.id,
+            actor.imageUrl,
+            actor.name,
+            actor.character
+        ),
         modifier = Modifier
             .padding(10.dp)
             .size(

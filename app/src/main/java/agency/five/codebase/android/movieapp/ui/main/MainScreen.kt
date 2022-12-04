@@ -34,8 +34,11 @@ import androidx.navigation.navArgument
 fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    var showBottomBar by remember {
-        mutableStateOf(false)
+    val showBottomBar by remember {
+        derivedStateOf {
+            navBackStackEntry?.destination?.route == NavigationItem.HomeDestination.route ||
+                    navBackStackEntry?.destination?.route == NavigationItem.FavoritesDestination.route
+        }
     }
     val showBackIcon = !showBottomBar
     Scaffold(
@@ -72,7 +75,6 @@ fun MainScreen() {
                 modifier = Modifier.padding(padding),
             ) {
                 composable(NavigationItem.HomeDestination.route) {
-                    showBottomBar = true
                     HomeScreenRoute(
                         onNavigateToMovieDetails = {
                             navController.navigate(
@@ -82,7 +84,6 @@ fun MainScreen() {
                     )
                 }
                 composable(NavigationItem.FavoritesDestination.route) {
-                    showBottomBar = true
                     FavoritesRoute(
                         onNavigateToMovieDetails = {
                             navController.navigate(
@@ -95,7 +96,6 @@ fun MainScreen() {
                     route = MovieDetailsDestination.route,
                     arguments = listOf(navArgument(MOVIE_ID_KEY) { type = NavType.IntType }),
                 ) {
-                    showBottomBar = false
                     MovieDetailsRoute()
                 }
             }
@@ -105,7 +105,7 @@ fun MainScreen() {
 
 @Composable
 private fun TopBar(
-    navigationIcon: @Composable (() -> Unit)? = null,
+    navigationIcon: @Composable () -> Unit = {},
 ) {
     Box(
         modifier = Modifier
@@ -162,8 +162,11 @@ private fun BottomNavigationBar(
                     if (currentDestination != null) {
                         Image(
                             painter = painterResource(
-                                id = if (currentDestination.route == destination.route) destination.selectedIconId
-                                else destination.unselectedIconId
+                                id = if (currentDestination.route == destination.route) {
+                                    destination.selectedIconId
+                                } else {
+                                    destination.unselectedIconId
+                                }
                             ),
                             contentDescription = null,
                             modifier = Modifier

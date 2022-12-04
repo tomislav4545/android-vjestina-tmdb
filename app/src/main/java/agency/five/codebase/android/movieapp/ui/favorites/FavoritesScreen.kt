@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 
 private val favoritesMapper: FavoritesMapper = FavoritesMapperImpl()
 
-
 val favoritesViewState = favoritesMapper.toFavoritesViewState(MoviesMock.getMoviesList())
 
 @Composable
@@ -43,7 +42,6 @@ fun FavoritesRoute(
     )
 }
 
-
 @Composable
 fun FavoritesScreen(
     modifier: Modifier,
@@ -53,32 +51,33 @@ fun FavoritesScreen(
 ) {
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
+        columns = GridCells.Adaptive(dimensionResource(id = R.dimen.card_width)),
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.large_spacing)),
         horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.medium_spacing)),
-        content = {
-            header {
-                Text(
-                    text = "Favorites",
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(start = MaterialTheme.spacing.medium)
-                )
-            }
-            items(
-                items = favoritesViewState.favoriteMoviesViewStates,
-                key = { movie -> movie.id }) { card ->
-                MovieCard(
-                    modifier = Modifier
-                        .width(dimensionResource(id = R.dimen.movie_card_favorites_width))
-                        .height(dimensionResource(id = R.dimen.movie_card_favorites_height)),
-                    movieCardViewState = card.movieCardViewState,
-                    onClick = { onCardClick(card.id) },
-                    onFavoriteButtonClicked = { onFavoriteButtonClick() }
-                )
-            }
-        },
         modifier = modifier
-    )
+    ) {
+
+        header {
+            Text(
+                text = "Favorites",
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(start = MaterialTheme.spacing.medium)
+            )
+        }
+        items(
+            items = favoritesViewState.favoriteMoviesViewStates,
+            key = { movie -> movie.id }) { card ->
+            MovieCard(
+                modifier = Modifier
+                    .width(dimensionResource(id = R.dimen.movie_card_favorites_width))
+                    .height(dimensionResource(id = R.dimen.movie_card_favorites_height)),
+                movieCardViewState = card.movieCardViewState,
+                onClick = { onCardClick(card.id) },
+                onFavoriteButtonClicked = { onFavoriteButtonClick() }
+            )
+        }
+    }
+
 }
 
 fun LazyGridScope.header(

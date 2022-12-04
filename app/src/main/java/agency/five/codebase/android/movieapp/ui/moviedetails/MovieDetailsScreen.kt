@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
@@ -32,23 +33,23 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
 private val MovieDetailsMapper: MovieDetailsMapper = MovieDetailsMapperImpl()
-
 val movieDetailsViewState = MovieDetailsMapper.toMovieDetailsViewState(MoviesMock.getMovieDetails())
 
 @Composable
 fun MovieDetailsRoute(
-
 ) {
     val detailsViewState by remember { mutableStateOf(movieDetailsViewState) }
 
     MovieDetailsScreen(
         detailsViewState,
+        onFavoriteButtonClicked = {}
     )
 }
 
 @Composable
 fun MovieDetailsScreen(
     movieDetailsViewState: MovieDetailsViewState,
+    onFavoriteButtonClicked: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -78,17 +79,22 @@ fun MovieCast(
 ) {
     Column {
         Text(
-            text = "Top Billed Cast",
+            text = stringResource(id = R.string.top_billed_cast),
             fontSize = 17.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.primary,
             modifier = Modifier
-                .padding(horizontal = MaterialTheme.spacing.medium, vertical = MaterialTheme.spacing.small)
+                .padding(
+                    horizontal = MaterialTheme.spacing.medium,
+                    vertical = MaterialTheme.spacing.small
+                )
         )
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
-            modifier = Modifier
-                .padding(horizontal = MaterialTheme.spacing.medium, vertical = MaterialTheme.spacing.small)
+            modifier = Modifier.padding(
+                    horizontal = MaterialTheme.spacing.medium,
+                    vertical = MaterialTheme.spacing.small
+                )
         ) {
             items(movieDetailsViewState.cast.size) { actor ->
                 ActorCard(
@@ -101,9 +107,7 @@ fun MovieCast(
                     modifier = Modifier
                         .size(
                             width = dimensionResource(id = R.dimen.actor_card_width),
-                            height = dimensionResource(
-                                id = R.dimen.actor_card_height
-                            )
+                            height = dimensionResource(id = R.dimen.actor_card_height)
                         )
                 )
             }
@@ -115,9 +119,11 @@ fun MovieCast(
 fun MovieCrewman(
     movieDetailsViewState: MovieDetailsViewState
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
-        contentPadding = PaddingValues(dimensionResource(id = R.dimen.medium_spacing)),
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(2),
+        contentPadding = PaddingValues(MaterialTheme.spacing.medium),
+        horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.crew_horizontal_spacing)),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.crew_vertical_spacing)),
         userScrollEnabled = false,
         modifier = Modifier
             .height(dimensionResource(id = R.dimen.crewman_height))
@@ -132,10 +138,14 @@ fun MovieCrewman(
                     job = crewman.job
                 ),
                 modifier = Modifier
-                    .padding(vertical = dimensionResource(id = R.dimen.medium_spacing), horizontal = MaterialTheme.spacing.small)
+                    .padding(
+                        vertical = MaterialTheme.spacing.small,
+                        horizontal = MaterialTheme.spacing.small
+                    )
             )
         }
     }
+
 }
 
 @Composable
@@ -216,6 +226,9 @@ fun MovieImage(
 @Composable
 fun MovieDetailsScreenPreview() {
     MovieAppTheme {
-        MovieDetailsScreen(movieDetailsViewState = movieDetailsViewState)
+        MovieDetailsScreen(
+            movieDetailsViewState = movieDetailsViewState,
+            onFavoriteButtonClicked = {}
+        )
     }
 }

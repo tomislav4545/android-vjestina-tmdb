@@ -13,11 +13,3 @@ data class MovieDetailsViewState(
     val crew: List<CrewItemViewState>,
     val cast: List<ActorCardViewState>,
 )
-
-data class ActorViewState(
-    val actorCardViewState: ActorCardViewState,
-)
-
-data class CrewmanViewState(
-    val crewItemViewState: CrewItemViewState,
-)

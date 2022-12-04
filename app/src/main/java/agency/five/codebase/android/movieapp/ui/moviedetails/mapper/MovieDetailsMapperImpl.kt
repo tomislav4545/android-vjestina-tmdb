@@ -7,27 +7,23 @@ import agency.five.codebase.android.movieapp.ui.moviedetails.MovieDetailsViewSta
 
 class MovieDetailsMapperImpl : MovieDetailsMapper {
     override fun toMovieDetailsViewState(movieDetails: MovieDetails): MovieDetailsViewState {
-        val crewList = mutableListOf<CrewItemViewState>()
-        val castList = mutableListOf<ActorCardViewState>()
 
-        for (crewman in movieDetails.crew)
-            crewList.add(
-                CrewItemViewState(
-                    id = crewman.id,
-                    name = crewman.name,
-                    job = crewman.job
-                )
+        val crewList = movieDetails.crew.map {
+            CrewItemViewState(
+                id = it.id,
+                name = it.name,
+                job = it.job
             )
+        }
 
-        for (actor in movieDetails.cast)
-            castList.add(
-                ActorCardViewState(
-                    id = actor.id,
-                    name = actor.name,
-                    character = actor.character,
-                    imageUrl = actor.imageUrl
-                )
+        val castList = movieDetails.cast.map {
+            ActorCardViewState(
+                id = it.id,
+                name = it.name,
+                character = it.character,
+                imageUrl = it.imageUrl
             )
+        }
 
         return MovieDetailsViewState(
             id = movieDetails.movie.id,

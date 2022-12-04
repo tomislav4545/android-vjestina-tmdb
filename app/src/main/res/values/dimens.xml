@@ -19,4 +19,7 @@
     <dimen name="movie_image_height">350.0dp</dimen>
     <dimen name="userscore_size">60.0dp</dimen>
     <dimen name="favorite_button_size">50.0dp</dimen>
+    <dimen name="card_width">100.0dp</dimen>
+    <dimen name="crew_horizontal_spacing">40.0dp</dimen>
+    <dimen name="crew_vertical_spacing">10.0dp</dimen>
 </resources>

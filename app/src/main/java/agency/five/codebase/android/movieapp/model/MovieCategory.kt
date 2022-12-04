@@ -1,5 +1,7 @@
 package agency.five.codebase.android.movieapp.model
 
+import agency.five.codebase.android.movieapp.R
+
 enum class MovieCategory {
     POPULAR_STREAMING,
     POPULAR_ON_TV,
@@ -11,7 +13,6 @@ enum class MovieCategory {
     UPCOMING_THIS_WEEK;
 
     companion object {
-        private val VALUES = values()
-        fun getByOrdinal(ordinal: Int) = VALUES.firstOrNull { it.ordinal == ordinal }
+        fun getByOrdinal(ordinal: Int) = values().first { it.ordinal == ordinal }
     }
 }

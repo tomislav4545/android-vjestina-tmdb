@@ -26,34 +26,34 @@ import androidx.compose.ui.unit.sp
 
 private val homeScreenMapper: HomeScreenMapper = HomeScreenMapperImpl()
 
-val popularCategoryLabels = listOf(
+private val popularCategoryLabels = listOf(
     MovieCategory.POPULAR_STREAMING,
     MovieCategory.POPULAR_ON_TV,
     MovieCategory.POPULAR_FOR_RENT,
     MovieCategory.POPULAR_IN_THEATRES
 )
 
-val nowPlayingCategoryLabels = listOf(
+private val nowPlayingCategoryLabels = listOf(
     MovieCategory.NOW_PLAYING_MOVIES,
     MovieCategory.NOW_PLAYING_TV
 )
 
-val upcomingCategoryLabels = listOf(
+private val upcomingCategoryLabels = listOf(
     MovieCategory.UPCOMING_TODAY,
     MovieCategory.UPCOMING_THIS_WEEK
 )
 
-val popularCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
+private val popularCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
     popularCategoryLabels,
     MovieCategory.POPULAR_STREAMING,
     MoviesMock.getMoviesList()
 )
-val nowPlayingCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
+private val nowPlayingCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
     nowPlayingCategoryLabels,
     MovieCategory.NOW_PLAYING_MOVIES,
     MoviesMock.getMoviesList()
 )
-val upcomingCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
+private val upcomingCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
     upcomingCategoryLabels,
     MovieCategory.UPCOMING_TODAY,
     MoviesMock.getMoviesList()
@@ -74,25 +74,26 @@ fun HomeScreenRoute(
         onPopularLabelClick = {
             popularViewState = homeScreenMapper.toHomeMovieCategoryViewState(
                 popularCategoryLabels,
-                MovieCategory.getByOrdinal(it)!!,
+                MovieCategory.getByOrdinal(it),
                 MoviesMock.getMoviesList()
             )
         },
         onNowPlayingLabelClick = {
             nowPlayingViewState = homeScreenMapper.toHomeMovieCategoryViewState(
                 nowPlayingCategoryLabels,
-                MovieCategory.getByOrdinal(it)!!,
+                MovieCategory.getByOrdinal(it),
                 MoviesMock.getMoviesList()
             )
         },
         onUpcomingLabelClick = {
             upcomingViewState = homeScreenMapper.toHomeMovieCategoryViewState(
                 upcomingCategoryLabels,
-                MovieCategory.getByOrdinal(it)!!,
+                MovieCategory.getByOrdinal(it),
                 MoviesMock.getMoviesList()
             )
         },
-        onNavigateToMovieDetails = onNavigateToMovieDetails
+        onNavigateToMovieDetails = onNavigateToMovieDetails,
+        modifier = Modifier
     )
 }
 
@@ -105,6 +106,7 @@ fun HomeScreen(
     onNowPlayingLabelClick: (Int) -> Unit,
     onUpcomingLabelClick: (Int) -> Unit,
     onNavigateToMovieDetails: (Int) -> Unit,
+    modifier: Modifier
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.home_screen_spacing))
@@ -164,10 +166,8 @@ fun UpcomingMovies(
         items(upcomingViewState.movies.size) { movie ->
             MovieCard(
                 movieCardViewState = MovieCardViewState(
-                    imageUrl = upcomingViewState.movies[movie].imageUrl,
-                    id = upcomingViewState.movies[movie].movieId,
-                    isFavorite = upcomingViewState.movies[movie].isFavorite,
-                    title = upcomingViewState.movies[movie].title
+                    imageUrl = upcomingViewState.movies[movie].movie.imageUrl,
+                    isFavorite = upcomingViewState.movies[movie].movie.isFavorite,
                 ),
                 onClick = { onNavigateToMovieDetails(upcomingViewState.movies[movie].movieId) },
                 onFavoriteButtonClicked = {},
@@ -218,10 +218,8 @@ fun NowPlayingMovies(
         items(nowPlayingViewState.movies.size) { movie ->
             MovieCard(
                 movieCardViewState = MovieCardViewState(
-                    imageUrl = nowPlayingViewState.movies[movie].imageUrl,
-                    id = nowPlayingViewState.movies[movie].movieId,
-                    isFavorite = nowPlayingViewState.movies[movie].isFavorite,
-                    title = nowPlayingViewState.movies[movie].title
+                    imageUrl = nowPlayingViewState.movies[movie].movie.imageUrl,
+                    isFavorite = nowPlayingViewState.movies[movie].movie.isFavorite,
                 ),
                 onClick = { onNavigateToMovieDetails(nowPlayingViewState.movies[movie].movieId) },
                 onFavoriteButtonClicked = {},
@@ -272,10 +270,8 @@ fun PopularMovies(
         items(popularViewState.movies.size) { movie ->
             MovieCard(
                 movieCardViewState = MovieCardViewState(
-                    imageUrl = popularViewState.movies[movie].imageUrl,
-                    id = popularViewState.movies[movie].movieId,
-                    isFavorite = popularViewState.movies[movie].isFavorite,
-                    title = popularViewState.movies[movie].title
+                    imageUrl = popularViewState.movies[movie].movie.imageUrl,
+                    isFavorite = popularViewState.movies[movie].movie.isFavorite,
                 ),
                 onClick = { onNavigateToMovieDetails(popularViewState.movies[movie].movieId) },
                 onFavoriteButtonClicked = {},
@@ -289,7 +285,31 @@ fun PopularMovies(
 @Composable
 fun HomeScreenPreview() {
 
-    HomeScreenRoute {
+    val defaultPopularCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
+        movieCategories = popularCategoryLabels,
+        selectedMovieCategory = MovieCategory.POPULAR_STREAMING,
+        movies = MoviesMock.getMoviesList()
+    )
 
-    }
+    val defaultNowPlayingCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
+        movieCategories = nowPlayingCategoryLabels,
+        selectedMovieCategory = MovieCategory.NOW_PLAYING_MOVIES,
+        movies = MoviesMock.getMoviesList()
+    )
+
+    val defaultUpcomingCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
+        movieCategories = upcomingCategoryLabels,
+        selectedMovieCategory = MovieCategory.UPCOMING_TODAY,
+        movies = MoviesMock.getMoviesList()
+    )
+    HomeScreen(
+        popularViewState = defaultPopularCategoryViewState,
+        nowPlayingViewState = defaultNowPlayingCategoryViewState,
+        upcomingViewState = defaultUpcomingCategoryViewState,
+        onPopularLabelClick = {},
+        onNowPlayingLabelClick = {},
+        onUpcomingLabelClick = {},
+        onNavigateToMovieDetails = {},
+        modifier = Modifier
+        )
 }
