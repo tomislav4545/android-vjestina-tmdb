@@ -11,10 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,18 +24,17 @@ val favoritesViewState = favoritesMapper.toFavoritesViewState(MoviesMock.getMovi
 
 @Composable
 fun FavoritesRoute(
+    viewModel: FavoritesViewModel,
     onNavigateToMovieDetails: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val favoritesViewState by remember { mutableStateOf(favoritesViewState) }
+    val favoritesViewState: FavoritesViewState by viewModel.favoritesViewState.collectAsState()
 
     FavoritesScreen(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(MaterialTheme.spacing.medium),
         favoritesViewState = favoritesViewState,
         onCardClick = onNavigateToMovieDetails,
-        onFavoriteButtonClick = { }
+        onFavoriteButtonClick = viewModel::toggleFavorite,
+        modifier = modifier
     )
 }
 
@@ -47,7 +43,7 @@ fun FavoritesScreen(
     modifier: Modifier,
     favoritesViewState: FavoritesViewState,
     onCardClick: (Int) -> Unit,
-    onFavoriteButtonClick: () -> Unit
+    onFavoriteButtonClick: (Int) -> Unit
 ) {
 
     LazyVerticalGrid(
@@ -73,7 +69,7 @@ fun FavoritesScreen(
                     .height(dimensionResource(id = R.dimen.movie_card_favorites_height)),
                 movieCardViewState = card.movieCardViewState,
                 onClick = { onCardClick(card.id) },
-                onFavoriteButtonClicked = { onFavoriteButtonClick() }
+                onFavoriteButtonClicked = { onFavoriteButtonClick(card.id) }
             )
         }
     }

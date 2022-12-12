@@ -7,6 +7,7 @@
     <dimen name="back_icon_size">24.dp</dimen>
     <dimen name="top_bar_height">50.dp</dimen>
     <dimen name="medium_spacing">10.dp</dimen>
+    <dimen name="small_spacing">5.0dp</dimen>
     <dimen name="movie_card_favorites_width">120.dp</dimen>
     <dimen name="movie_card_favorites_height">180.dp</dimen>
     <dimen name="multi_large_spacing">30.dp</dimen>
