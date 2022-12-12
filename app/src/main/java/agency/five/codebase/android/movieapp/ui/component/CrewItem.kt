@@ -13,9 +13,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 
 data class CrewItemViewState(
+    val id: Int,
     val name: String,
     val job: String
 )
@@ -49,6 +49,10 @@ fun CrewItem(
 @Composable
 private fun CrewmanDetailsPreview() {
     val crewman = getCrewman()
-    val crewItemViewState = CrewItemViewState(crewman.name, crewman.job)
+    val crewItemViewState = CrewItemViewState(
+        crewman.id,
+        crewman.name,
+        crewman.job
+    )
     CrewItem(crewItemViewState = crewItemViewState)
 }

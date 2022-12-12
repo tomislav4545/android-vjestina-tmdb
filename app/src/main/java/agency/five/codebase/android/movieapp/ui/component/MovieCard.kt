@@ -18,8 +18,7 @@ import coil.compose.AsyncImage
 
 data class MovieCardViewState(
     val imageUrl: String?,
-    val title: String,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
 )
 
 @Composable
@@ -59,7 +58,7 @@ fun MovieCard(
 private fun MovieCardPreview() {
     val movie = MoviesMock.getMoviesList()[4]
     val movieCardViewState =
-        MovieCardViewState(imageUrl = movie.imageUrl, title = movie.title, movie.isFavorite)
+        MovieCardViewState(imageUrl = movie.imageUrl, isFavorite = movie.isFavorite)
     MovieCard(
         movieCardViewState = movieCardViewState,
         modifier = Modifier
