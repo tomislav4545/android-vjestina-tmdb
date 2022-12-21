@@ -33,7 +33,7 @@ fun FavoritesRoute(
     FavoritesScreen(
         favoritesViewState = favoritesViewState,
         onCardClick = onNavigateToMovieDetails,
-        onFavoriteButtonClick = viewModel::toggleFavorite,
+        onFavoriteButtonClick = viewModel::removeMovieFromFavorites,
         modifier = modifier
     )
 }
