@@ -14,7 +14,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -53,7 +52,7 @@ fun UserScoreProgressBar(
             drawArc(
                 color = Green_Progress,
                 startAngle = STARTING_ANGLE,
-                sweepAngle = DEGREES_IN_CIRCLE * score,
+                sweepAngle = DEGREES_IN_CIRCLE * (score / PERCENTAGE_FACTOR),
                 useCenter = false,
                 style = Stroke(
                     5.dp.toPx(),
@@ -63,7 +62,7 @@ fun UserScoreProgressBar(
         }
 
         Text(
-            text = SCORE_FORMAT.format(score * PERCENTAGE_FACTOR).toString(),
+            text = SCORE_FORMAT.format(score).toString(),
             style = Typography.h3,
             color = Color.White
         )
@@ -73,5 +72,5 @@ fun UserScoreProgressBar(
 @Preview(showBackground = true)
 @Composable
 fun UserScoreProgressBarPreview() {
-    UserScoreProgressBar(modifier = Modifier.size(60.dp), score = 0.698f)
+    UserScoreProgressBar(modifier = Modifier.size(60.dp), score = 7.1f)
 }

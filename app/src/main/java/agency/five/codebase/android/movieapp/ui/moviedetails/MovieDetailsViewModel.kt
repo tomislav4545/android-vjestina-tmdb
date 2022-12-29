@@ -1,7 +1,6 @@
 package agency.five.codebase.android.movieapp.ui.moviedetails
 
 import agency.five.codebase.android.movieapp.data.repository.MovieRepository
-import agency.five.codebase.android.movieapp.mock.MoviesMock
 import agency.five.codebase.android.movieapp.ui.moviedetails.mapper.MovieDetailsMapper
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,22 +8,18 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class MovieDetailsViewModel(
+    private val movieId: Int,
     private val movieRepository: MovieRepository,
-    movieDetailsMapper: MovieDetailsMapper,
-    movieId: Int
+    private val movieDetailsScreenMapper: MovieDetailsMapper,
 ) : ViewModel() {
-    val movieDetailsViewState: StateFlow<MovieDetailsViewState> =
-        movieRepository.movieDetails(movieId)
-            .map { movies -> movieDetailsMapper.toMovieDetailsViewState(movies) }
-            .stateIn(
-                viewModelScope,
-                SharingStarted.Eagerly,
-                movieDetailsMapper.toMovieDetailsViewState(MoviesMock.getMovieDetails(movieId))
-            )
+    val movieDetailViewState: StateFlow<MovieDetailsViewState> =
+        movieRepository.movieDetails(movieId).map { movieDetails ->
+            movieDetailsScreenMapper.toMovieDetailsViewState(movieDetails)
+        }.stateIn(viewModelScope, SharingStarted.Lazily, MovieDetailsViewState.getEmptyObject())
 
-    fun toggleFavorite(movieId: Int) {
+    fun toggleFavorite(id: Int) {
         viewModelScope.launch {
-            movieRepository.toggleFavorite(movieId)
+            movieRepository.toggleFavorite(id)
         }
     }
 }
