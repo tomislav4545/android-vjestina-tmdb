@@ -4,7 +4,6 @@ import agency.five.codebase.android.movieapp.model.Movie
 import agency.five.codebase.android.movieapp.ui.component.MovieCardViewState
 import agency.five.codebase.android.movieapp.ui.favorites.FavoritesMovieViewState
 import agency.five.codebase.android.movieapp.ui.favorites.FavoritesViewState
-import agency.five.codebase.android.movieapp.ui.favorites.favoritesViewState
 
 class FavoritesMapperImpl : FavoritesMapper {
     override fun toFavoritesViewState(favoriteMovies: List<Movie>): FavoritesViewState {
@@ -25,5 +24,4 @@ class FavoritesMapperImpl : FavoritesMapper {
             )
         )
     }
-
 }

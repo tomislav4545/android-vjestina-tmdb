@@ -7,7 +7,6 @@ import agency.five.codebase.android.movieapp.navigation.NavigationItem
 import agency.five.codebase.android.movieapp.ui.favorites.FavoritesRoute
 import agency.five.codebase.android.movieapp.ui.home.HomeScreenRoute
 import agency.five.codebase.android.movieapp.ui.moviedetails.MovieDetailsRoute
-import agency.five.codebase.android.movieapp.ui.theme.Blue
 import agency.five.codebase.android.movieapp.ui.theme.NavigationBlue
 import agency.five.codebase.android.movieapp.ui.theme.spacing
 import androidx.compose.foundation.Image
@@ -18,7 +17,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -29,6 +27,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun MainScreen() {
@@ -81,6 +81,7 @@ fun MainScreen() {
                                 MovieDetailsDestination.createNavigationRoute(it)
                             )
                         },
+                        viewModel = getViewModel()
                     )
                 }
                 composable(NavigationItem.FavoritesDestination.route) {
@@ -90,13 +91,20 @@ fun MainScreen() {
                                 MovieDetailsDestination.createNavigationRoute(it)
                             )
                         },
+                        viewModel = getViewModel()
                     )
                 }
                 composable(
                     route = MovieDetailsDestination.route,
                     arguments = listOf(navArgument(MOVIE_ID_KEY) { type = NavType.IntType }),
                 ) {
-                    MovieDetailsRoute()
+                    MovieDetailsRoute(viewModel = getViewModel {
+                        parametersOf(
+                            it.arguments?.getInt(
+                                MOVIE_ID_KEY
+                            ) ?: throw IllegalArgumentException("No movie id found.")
+                        )
+                    })
                 }
             }
         }
