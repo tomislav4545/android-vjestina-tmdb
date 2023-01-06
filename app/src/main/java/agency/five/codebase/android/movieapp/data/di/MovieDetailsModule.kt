@@ -9,9 +9,9 @@ import org.koin.dsl.module
 val movieDetailsModule = module {
     viewModel { (movieId: Int) ->
         MovieDetailsViewModel(
+            movieId = movieId,
             movieRepository = get(),
-            movieDetailsMapper = get(),
-            movieId = movieId
+            movieDetailsScreenMapper = get(),
         )
     }
     single<MovieDetailsMapper> { MovieDetailsMapperImpl() }

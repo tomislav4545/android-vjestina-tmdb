@@ -35,7 +35,7 @@ fun MovieDetailsRoute(
     viewModel: MovieDetailsViewModel,
     modifier: Modifier = Modifier
 ) {
-    val movieDetailsViewState: MovieDetailsViewState by viewModel.movieDetailsViewState.collectAsState()
+    val movieDetailsViewState: MovieDetailsViewState by viewModel.movieDetailViewState.collectAsState()
 
     MovieDetailsScreen(
         movieDetailsViewState = movieDetailsViewState,

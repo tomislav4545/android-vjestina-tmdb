@@ -12,4 +12,19 @@ data class MovieDetailsViewState(
     val isFavorite: Boolean,
     val crew: List<CrewItemViewState>,
     val cast: List<ActorCardViewState>,
-)
+) {
+    companion object EMPTY {
+        fun getEmptyObject(): MovieDetailsViewState {
+            return MovieDetailsViewState(
+                id = 0,
+                imageUrl = null,
+                voteAverage = 0.0f,
+                title = "",
+                overview = "",
+                isFavorite = false,
+                crew = listOf(),
+                cast = listOf(),
+            )
+        }
+    }
+}
